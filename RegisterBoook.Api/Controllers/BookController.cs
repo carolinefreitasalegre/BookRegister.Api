@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using RegisterBoook.Api.Dto;
+using RegisterBoook.Api.Dto.Requests;
+using RegisterBoook.Api.Dto.Responses;
 using RegisterBoook.Api.Services.Interfaces;
 
 namespace RegisterBoook.Api.Controllers
@@ -22,7 +23,8 @@ namespace RegisterBoook.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBooks()
         {
-            return Ok(await _register.GetAllBooks());
+            var result = await _register.GetAllBooks();
+            return Created("", result);
         }
 
         [HttpPost]

@@ -1,8 +1,7 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using RegisterBoook.Api.DataAccess.AppDbContext;
-using RegisterBoook.Api.Dto;
+using RegisterBoook.Api.Dto.Requests;
 using RegisterBoook.Api.Exceptions;
 using RegisterBoook.Api.Service.Services;
 using RegisterBoook.Api.Services.Interfaces;
@@ -19,7 +18,7 @@ builder.Services.AddDbContext<AppDbContextApi>(options =>
 builder.Services.AddScoped<IRegisterBook, RegisterBookService>();
 builder.Services.AddTransient<IValidator<RegisterBookRequest>, RegisterBookValidator>();
 
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,8 +26,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-//builder.Services.AddScoped<IValidator<BookRegisterRequest>, BookValidator>();
-//builder.Services.AddValidatorsFromAssemblyContaining<BookValidator>();
 
 
 

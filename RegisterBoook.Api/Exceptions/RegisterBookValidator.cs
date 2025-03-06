@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using RegisterBoook.Api.DataAccess.AppDbContext;
-using RegisterBoook.Api.Dto;
+using RegisterBoook.Api.Dto.Requests;
 
 namespace RegisterBoook.Api.Exceptions
 {

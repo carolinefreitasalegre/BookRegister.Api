@@ -1,4 +1,4 @@
-﻿namespace RegisterBoook.Api.Dto
+﻿namespace RegisterBoook.Api.Dto.Requests
 {
     public class RegisterBookRequest
     {

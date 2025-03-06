@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RegisterBoook.Api.Dto
+namespace RegisterBoook.Api.Dto.Requests
 {
     public class EditBookRequest
     {

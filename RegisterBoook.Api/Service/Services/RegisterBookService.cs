@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RegisterBoook.Api.DataAccess.AppDbContext;
-using RegisterBoook.Api.Dto;
+using RegisterBoook.Api.Dto.Requests;
+using RegisterBoook.Api.Dto.Responses;
+using RegisterBoook.Api.Exceptions;
 using RegisterBoook.Api.Models;
 using RegisterBoook.Api.Services.Interfaces;
 
@@ -10,20 +13,25 @@ namespace RegisterBoook.Api.Service.Services
     {
 
         private readonly AppDbContextApi _context;
-
-        public RegisterBookService(AppDbContextApi context)
+        private readonly IMapper _mapping;
+        public RegisterBookService(AppDbContextApi context, IMapper mapping)
         {
             _context = context;
+            _mapping = mapping; 
         }
 
 
-        public async Task<List<Book>> GetAllBooks()
+        public async Task<List<RegisterBookResponse>> GetAllBooks()
         {
 
             try
             {
                 var listBooks = await _context.books.ToListAsync();
-                return await _context.books.ToListAsync();
+                //return await _context.books.ToListAsync();
+
+                var responseList = _mapping.Map<List<RegisterBookResponse>>(listBooks);
+
+                return responseList;
 
             }
             catch (Exception ex)
@@ -89,12 +97,12 @@ namespace RegisterBoook.Api.Service.Services
 
                 throw new Exception("Erro ao salvar no banco de dados", ex);
             }
-           
+
         }
 
         public async Task<Book> DeleteBook(Guid Id)
-        {            
-           try
+        {
+            try
             {
 
                 var book = await _context.books.FirstOrDefaultAsync(b => b.Id == Id);
