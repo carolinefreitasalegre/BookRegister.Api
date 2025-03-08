@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using RegisterBoook.Api.DataAccess.AppDbContext;
 using RegisterBoook.Api.Dto.Requests;
 using RegisterBoook.Api.Dto.Responses;
-using RegisterBoook.Api.Exceptions;
 using RegisterBoook.Api.Models;
 using RegisterBoook.Api.Services.Interfaces;
 
@@ -17,7 +16,7 @@ namespace RegisterBoook.Api.Service.Services
         public RegisterBookService(AppDbContextApi context, IMapper mapping)
         {
             _context = context;
-            _mapping = mapping; 
+            _mapping = mapping;
         }
 
 
@@ -26,13 +25,11 @@ namespace RegisterBoook.Api.Service.Services
 
             try
             {
-                var listBooks = await _context.books.ToListAsync();
-                //return await _context.books.ToListAsync();
+                var listBooks = await _context.books.Include(a => a.Author).ToListAsync();
 
                 var responseList = _mapping.Map<List<RegisterBookResponse>>(listBooks);
 
                 return responseList;
-
             }
             catch (Exception ex)
             {
@@ -46,11 +43,14 @@ namespace RegisterBoook.Api.Service.Services
         {
             try
             {
-
+                var authorExist = await _context.author.FirstOrDefaultAsync(x => x.Id == request.AuthorId) ?? throw new KeyNotFoundException("Autor não encontrado.");
                 var newBook = new Book(request.Title, request.Genere)
                 {
+
                     Id = Guid.NewGuid(),
                     Register = DateTime.Now,
+                    Author = authorExist,
+
                 };
 
 
@@ -77,15 +77,22 @@ namespace RegisterBoook.Api.Service.Services
 
             try
             {
-                var book = await _context.books.FirstOrDefaultAsync();
+                var book = await _context.books.Include(a => a.Author).FirstOrDefaultAsync(b => b.Id == request.Id);
+                var author = await _context.author.FirstOrDefaultAsync(a => a.Id == request.Author.Id);
 
                 if (book == null)
                 {
                     throw new KeyNotFoundException("Livro não encontrado.");
                 }
+                if (author == null)
+                {
+                    throw new KeyNotFoundException("Autor não encontrado.");
+                }
 
                 book.Title = request.Title;
                 book.Genere = request.Genere;
+                book.Author = author;
+
 
                 _context.books.Update(book);
                 await _context.SaveChangesAsync();
@@ -105,8 +112,7 @@ namespace RegisterBoook.Api.Service.Services
             try
             {
 
-                var book = await _context.books.FirstOrDefaultAsync(b => b.Id == Id);
-
+                var book = await _context.books.FirstOrDefaultAsync(b => b.Id == Id) ?? throw new KeyNotFoundException("Livro não encontrado");
                 _context.books.Remove(book);
                 await _context.SaveChangesAsync();
 

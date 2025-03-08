@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RegisterBoook.Api.DataAccess.AppDbContext;
 using RegisterBoook.Api.Dto.Requests;
 using RegisterBoook.Api.Exceptions;
+using RegisterBoook.Api.Service.Interfaces;
 using RegisterBoook.Api.Service.Services;
 using RegisterBoook.Api.Services.Interfaces;
 
@@ -16,7 +17,9 @@ builder.Services.AddDbContext<AppDbContextApi>(options =>
 });
 
 builder.Services.AddScoped<IRegisterBook, RegisterBookService>();
+builder.Services.AddScoped<IRegisterAuthor, RegisterAuthorService>();
 builder.Services.AddTransient<IValidator<RegisterBookRequest>, RegisterBookValidator>();
+builder.Services.AddTransient<IValidator<RegisterAuthorRequest>, RegisterAuthorValidator>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

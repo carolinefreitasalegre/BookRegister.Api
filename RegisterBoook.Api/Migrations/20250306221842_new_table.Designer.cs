@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegisterBoook.Api.DataAccess.AppDbContext;
 
@@ -11,9 +12,11 @@ using RegisterBoook.Api.DataAccess.AppDbContext;
 namespace RegisterBoook.Api.Migrations
 {
     [DbContext(typeof(AppDbContextApi))]
-    partial class AppDbContextApiModelSnapshot : ModelSnapshot
+    [Migration("20250306221842_new_table")]
+    partial class new_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +51,9 @@ namespace RegisterBoook.Api.Migrations
 
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AutorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Genere")
                         .IsRequired()

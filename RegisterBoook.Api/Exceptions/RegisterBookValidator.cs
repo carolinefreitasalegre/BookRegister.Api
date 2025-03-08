@@ -13,13 +13,12 @@ namespace RegisterBoook.Api.Exceptions
             _context = context;
 
 
-
             RuleFor(b => b.Title).NotEmpty()
                 .WithMessage("Campo Título não pode estar em branco.")
                 .MustAsync(TitleUnique).WithMessage("Livro já cadastrado.");
-            ;
+            
             RuleFor(b => b.Genere).NotEmpty().WithMessage("Campo Gênero não pode estar em branco.");
-
+            RuleFor(b => b.AuthorId).NotEmpty().WithMessage("Código do autor não pode estar em branco.");
         }
 
         public async Task<bool> TitleUnique(string title, CancellationToken token)

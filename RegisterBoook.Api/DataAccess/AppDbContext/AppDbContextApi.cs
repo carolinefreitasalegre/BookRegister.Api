@@ -8,6 +8,8 @@ namespace RegisterBoook.Api.DataAccess.AppDbContext
         public AppDbContextApi(DbContextOptions<AppDbContextApi> options) : base(options) { }
 
         public DbSet<Book> books { get; set; }
+        public DbSet<Author> author { get; set; }
+
 
     }
 }

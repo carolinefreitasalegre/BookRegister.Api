@@ -8,6 +8,7 @@ namespace RegisterBoook.Api.Models
         {
             Title = title;
             Genere = genere;
+            //Author = author;
         }
 
         public Book()
@@ -23,6 +24,9 @@ namespace RegisterBoook.Api.Models
         public string Genere { get; set; }
 
         public DateTime Register { get; set; } = DateTime.Now;
+
+        public Guid AuthorId { get; set; }
+        public Author Author { get; set; } = null!;
     }
 
 

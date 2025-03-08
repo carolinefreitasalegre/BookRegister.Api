@@ -1,6 +1,6 @@
 @RegisterBoook.Api_HostAddress = http://localhost:5268
 
-GET {{RegisterBoook.Api_HostAddress}}/weatherforecast/
+GET {{RegisterBoook.Api_HostAddress}}/
 Accept: application/json
 
 ###
