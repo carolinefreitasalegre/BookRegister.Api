@@ -55,15 +55,16 @@ namespace RegisterBoook.Api.Controllers
         public async Task<IActionResult> EditBook(Guid Id, EditBookRequest request)
         {
 
-            request.Id = Id;
+            //request.Id = Id;
 
-            if (request == null)
-            {
-                return NotFound();
-            }
+            //if (request == null)
+            //{
+            //    return NotFound();
+            //}
+
 
             var editBook = await _register.EditBook(request);
-            return Created("", editBook);
+            return Ok(editBook);
         }
 
         [HttpDelete("/deletar-livro/{Id}")]
@@ -104,17 +105,9 @@ namespace RegisterBoook.Api.Controllers
         [HttpPost("/editar-autor/{Id}")]
         public async Task<IActionResult> EditAuthor(Guid Id, EditAuthorRequest request)
         {
-
-            request.Id = Id;
-
-            if (request == null)
-            {
-                return NotFound();
-            }
-
             var editAuthor = await _registerAuthor.EditAuthor(request);
 
-            return Created("", editAuthor);
+            return Ok(editAuthor);
         }
 
 
