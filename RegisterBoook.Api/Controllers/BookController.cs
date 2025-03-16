@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegisterBoook.Api.Dto.Requests;
-using RegisterBoook.Api.Dto.Responses;
-using RegisterBoook.Api.Exceptions;
 using RegisterBoook.Api.Service.Interfaces;
 using RegisterBoook.Api.Services.Interfaces;
 
 namespace RegisterBoook.Api.Controllers
 {
+    [Authorize]
     [Route("/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
@@ -54,15 +54,6 @@ namespace RegisterBoook.Api.Controllers
         [HttpPost("/editar-livro/{Id}")]
         public async Task<IActionResult> EditBook(Guid Id, EditBookRequest request)
         {
-
-            //request.Id = Id;
-
-            //if (request == null)
-            //{
-            //    return NotFound();
-            //}
-
-
             var editBook = await _register.EditBook(request);
             return Ok(editBook);
         }
